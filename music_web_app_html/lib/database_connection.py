@@ -1,6 +1,5 @@
-import os
+import os, psycopg
 from flask import g
-import psycopg
 from psycopg.rows import dict_row
 
 
@@ -11,8 +10,8 @@ from psycopg.rows import dict_row
 # That's why we have provided it!
 class DatabaseConnection:
     # VVV CHANGE BOTH OF THESE VVV
-    DEV_DATABASE_NAME = "music-library-v2_removebeforetesting"
-    TEST_DATABASE_NAME = "music-library-v2-test_removebeforetesting"
+    DEV_DATABASE_NAME = "music-library-v2"
+    TEST_DATABASE_NAME = "music-library-v2-test"
 
     def __init__(self, test_mode=False):
         self.test_mode = test_mode
@@ -73,6 +72,7 @@ class DatabaseConnection:
 # Flask request can use. To see how to use it, look at example_routes.py
 def get_flask_database_connection(app):
     if not hasattr(g, 'flask_database_connection'):
-        g.flask_database_connection = DatabaseConnection(test_mode=app.config['TESTING'])
+        g.flask_database_connection = DatabaseConnection(
+            test_mode=os.getenv('APP_ENV') == 'test')
         g.flask_database_connection.connect()
     return g.flask_database_connection

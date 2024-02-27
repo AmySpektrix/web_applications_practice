@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create new album</title>
+</head>
+<body>
+    <h2>Create New Album</h2>
+    <form method="POST">
+        <label for="album_title">Album:</label><input type="text" id="album_title" name="album_title" required><br>
+        <label for="release_year">Release year:</label><input type="int" id="release_year" name="release_year" required><br>
+        <label for="artist_name">Artist:</label><select id="artist_name" name="artist_name" required>
+            {% for artist in artist_list %}
+                <option value="{{artist}}">{{artist}}</option>
+            {% endfor %}
+        </select><br>
+        <input type="submit" value="Create Album">
+    </form>
+</body>
+</html>
